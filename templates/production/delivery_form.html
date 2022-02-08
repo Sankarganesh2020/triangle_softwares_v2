@@ -1,0 +1,102 @@
+
+    <form action="#" class="mt-4" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            {{ field.errors }}
+        <div class="form-group mb-4">
+            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+            <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                </span>
+                {{ field }}
+            </div>  
+        </div>
+        {% endfor %}       
+        
+        <table class="border-0 shadow table-wrapper table-responsive table-centered">
+
+        {{ formset.management_form }}   
+
+        {% for form in formset %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% if forloop.first %}
+            <thead>
+                <tr>
+                    <th class="col-2"> 
+                        <div class="form-group mb-4">
+                            <label for="date">Delivery Date:</label>
+                        </div>
+                    </th>                    
+                    <th class="col-2"> 
+                        <div class="form-group mb-4">
+                            <label for="Size">Size:</label>
+                        </div>
+                    </th>
+                    <th class="col-2"> 
+                        <div class="form-group mb-4">
+                            <label for="Quantity">Quantity:</label>
+                        </div>
+                    </th>
+                    <th class="col-3"> 
+                        <div class="form-group mb-4">
+                            <label for="Quantity">Piece Type:</label>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% endif %}
+                <tr>
+                    <td class="col-2">
+                        <div class="form-group mb-4">                                                
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                                </span>
+                                {{ form.date }}
+                            </div>  
+                        </div>
+                    </td>
+                    <td class="col-2">
+                        <div class="form-group mb-4">                                                
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                                </span>
+                                {{ form.size }}
+                            </div>  
+                        </div>
+                    </td>
+                    <td class="col-2">
+                        <div class="form-group mb-4">                                                
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                                </span>
+                                {{ form.quantity }}
+                            </div>  
+                        </div>
+                    </td>
+                    <td class="col-3">
+                        <div class="form-group mb-4">                                                
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                                </span>
+                                {{ form.piece_type }}
+                            </div>  
+                        </div>
+                    </td>
+                </tr>   
+            </tbody>                          
+        {% endfor %}
+       
+    </table>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-gray-800">Submit</button>
+        </div>
+    </form>

@@ -1,0 +1,95 @@
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+    <h1> Delivery Summary </h1>
+{% endblock %}
+
+{% block result_list %}
+    <!-- Our content goes here... -->
+    <div class="results">
+        <table>
+    
+        <thead>
+          <tr>
+            <th>
+              <div class="text">
+                <a href="#">Job</a>
+              </div>
+            </th>
+            <th>
+              <div class="text">
+                <a href="#">D-Date</a>
+              </div>
+            </th>
+            <th>
+              <div class="text">
+                <a href="#">D-S</a>
+              </div>
+            </th>
+            <th>
+              <div class="text">
+                <a href="#">D-M</a>
+              </div>
+            </th>
+            <th>
+                <div class="text">
+                  <a href="#">D-L</a>
+                </div>
+            </th>
+            <th>
+                <div class="text">
+                  <a href="#">D-XL</a>
+                </div>
+            </th>
+            <th>
+                <div class="text">
+                  <a href="#">D-2XL</a>
+                </div>
+            </th>
+            <th>
+              <div class="text">
+                <a href="#">
+                  <strong>Total D-Quan</strong>
+                </a>
+              </div>
+            </th>            
+
+          </tr>
+        </thead>
+    
+        <tbody>
+          {% for row in summary %}
+          <tr class="{% cycle 'row1' 'row2' %}">
+            <td> {{ row.job_no }} </td>
+            <td> {{ row.date }} </td>
+            <td> {{ row.total_size_s_quantity  }} </td>
+            <td> {{ row.total_size_m_quantity }} </td>
+            <td> {{ row.total_size_l_quantity }} </td>
+            <td> {{ row.total_size_xl_quantity }} </td>
+            <td> {{ row.total_size_2xl_quantity  }} </td>
+
+            <td> {{ row.total_quantity | default:0 }} </td>
+            
+
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tr style="font-weight:bold; border-top:2px solid #DDDDDD;">
+            <td> Total </td>
+            <td>  </td>
+            <td> {{ summary_total.total_size_s_quantity }} </td>
+            <td> {{ summary_total.total_size_m_quantity }} </td>
+            <td> {{ summary_total.total_size_l_quantity }} </td>
+            <td> {{ summary_total.total_size_xl_quantity }} </td>
+            <td> {{ summary_total.total_size_2xl_quantity }} </td>           
+            <td> {{ summary_total.total_quantity | default:0 }} </td>
+           
+          
+        </tr>
+
+      </table>
+    </div>
+
+{% endblock %}
+
+{% block pagination %}{% endblock %}
