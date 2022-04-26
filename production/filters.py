@@ -17,5 +17,25 @@ class JobFilter(django_filters.FilterSet):
 
     class Meta:
         model = Job
-        fields = '__all__'
-        exclude = ['date','party_dc_no','unique_id', 'slug','created_on','modified_on']    
+        fields = ['job_no','partner','color','style','status']
+        # exclude = ['date','party_dc_no','unique_id', 'slug','created_on','modified_on']    
+
+
+class DeliveryFilter(django_filters.FilterSet):
+
+    job_no = ModelMultipleChoiceFilter(queryset=Job.objects.all())
+    # number = django_filters.CharFilter(lookup_expr='icontains')
+    # date = DateFilter(field_name="date")
+    job_no__color = ModelMultipleChoiceFilter(queryset=Color.objects.all())
+    job_no__style = ModelMultipleChoiceFilter(queryset=Style.objects.all())
+    job_no__status = ModelMultipleChoiceFilter(queryset=Status.objects.all())
+    # end_date = DateFilter(field_name="date", lookup_expr='lte')
+    size = ModelMultipleChoiceFilter(queryset=Size.objects.all())
+    # piece_type = ModelMultipleChoiceFilter(queryset=PieceType.objects.all())
+
+
+
+    class Meta:
+        model = Delivery
+        fields = ['job_no','job_no__color','job_no__style','job_no__status','size']
+        # exclude = ['date','party_dc_no','unique_id', 'slug','created_on','modified_on'] 

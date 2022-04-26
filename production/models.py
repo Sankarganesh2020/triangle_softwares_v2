@@ -8,7 +8,7 @@ from django.template.defaultfilters import slugify
 
 class Job(models.Model):   
     job_no = models.CharField(primary_key=True, max_length=20, verbose_name='Job #')
-    date = models.DateField(verbose_name='Order Date', default=datetime.date.today) 
+    date = models.DateField(verbose_name='Job Date', default=datetime.date.today) 
     partner = models.ForeignKey('master.Partner', on_delete=models.CASCADE, verbose_name='Customer')    
     style = models.ForeignKey('master.Style', on_delete=models.CASCADE) 
     color = models.ForeignKey('master.Color', on_delete=models.CASCADE, blank=True, null=True)
@@ -63,10 +63,10 @@ class Order(models.Model):
 class FabricInward(models.Model):
     job_no = models.ForeignKey('Job', on_delete=models.CASCADE)
     number = models.CharField(null=True, blank=True, max_length=16)
-    color = models.ForeignKey('master.Color', on_delete=models.CASCADE)
-    party_dc_date = models.DateField('Party DC Date') 
+    color = models.ForeignKey('master.Color', on_delete=models.CASCADE, verbose_name='Fabric Inward Color')
+    party_dc_date = models.DateField('Party DC Date',default=datetime.date.today) 
     fabric_type = models.ForeignKey('master.FabricType', on_delete=models.CASCADE)
-    no_of_rolls = models.DecimalField(max_digits=30, decimal_places=0,default=0, verbose_name='No of rolls')
+    no_of_rolls = models.DecimalField(max_digits=30, decimal_places=0,default=0, verbose_name='Number of rolls')
     dc_weight = models.DecimalField(max_digits=30, decimal_places=3,default=0, verbose_name='DC Weight')
     received_weight = models.DecimalField(max_digits=30, decimal_places=3,default=0, verbose_name='Received Weight')
     

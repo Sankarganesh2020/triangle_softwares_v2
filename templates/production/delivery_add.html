@@ -106,15 +106,104 @@
  
   <div class="card border-0 shadow mb-4">
     <div class="card-body">
-        {% include 'production/delivery_form.html' %}
+        <form action="#" class="mt-4" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <div class="col-lg-4 col-sm-6">
+                    <label for="PieceType">Piece Type</label>
+                    <select id="PieceType" name="piecetype_pk" class="form-control" required>
+                        {% for piecetype in piecetype_list %}                      
+                            <option value={{piecetype.pk}}>{{piecetype.piece_type}}</option>                        
+                        {% endfor %}
+                    </select>                                     
+                </div>
+            </div>
+
+            <div class="row mb-4">
+
+                {% for field in form %}
+                {{ field.errors }}
+                <div class="col-lg-4 col-sm-6">
+                    <div class="form-group mb-4">
+                        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                        <div class="input-group">
+            
+                            {{ field }}
+                        </div>  
+                    </div>
+                </div>
+                {% endfor %}       
+                <div class="row mb-4">
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="form-group mb-4">
+                            <label for="Size">Size:</label>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-6">
+                                
+                    </div>
+
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="form-group mb-4">
+                            <label for="Quantity">Quantity:</label>
+                        </div>
+                    </div>
+
+                </div>
+                {{ formset.management_form }}   
+                
+                {% for form in formset %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    <div class="row form-row spacer">
+                        <div class="input-group">
+                            <div class="col-lg-2 col-sm-6">
+                                <div class="form-group mb-4">                                                
+                                    <div class="input-group">
+                                        {{ form.size }}
+                                    </div> 
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-2 col-sm-6">
+
+                            </div>
+
+                            <div class="col-lg-2 col-sm-6">
+                                <div class="form-group mb-4">                                                
+                                    <div class="input-group">
+                                        {{ form.quantity }}
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-6"></div>
+                            <div class="col-lg-2 col-sm-6">
+                                <div class="input-group-append">
+                                    <!-- <button name="add-form-row" class="btn btn-success add-form-row">+</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                 
+                {% endfor %}
+               
+            </div>
+            <div class="row spacer">
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-gray-800">Submit</button>
+                </div>
+            </div>
+        </form>
     </div>
   </div>
-
-
-
 
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<!-- Adding forms dynamically to a Django formset -->
+<script src="/static/assets/js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="/static/assets/js/dynamic_form.js"></script>
+{% endblock javascripts %}

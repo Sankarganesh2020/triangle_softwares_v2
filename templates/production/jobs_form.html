@@ -1,73 +1,108 @@
-
-    <form action="#" class="mt-4" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+<form action="#" class="mt-4" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row mb-4">
+        
         {% for field in form %}
-            {{ field.errors }}
-        <div class="form-group mb-4">
-            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
-            <div class="input-group">
-                <span class="input-group-text" id="basic-addon1">
-                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                </span>
-                {{ field }}
-            </div>  
+        {{ field.errors }}
+        <div class="col-lg-4 col-sm-6">
+            <div class="form-group mb-4">
+                <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                <div class="input-group">
+    
+                    {{ field }}
+                </div>  
+            </div>
         </div>
         {% endfor %}       
-        
-        <table class="border-0 shadow table-wrapper table-responsive table-centered">
-
+        <div class="row mb-4">
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group mb-4">
+                    <label for="FabricInwardColor:">Fabric Inward Color:</label>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group mb-4">
+                    <label for="FabricType">Fabric Type:</label>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group mb-4">
+                    <label for="Numberofrolls">Number of rolls:</label>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group mb-4">
+                    <label for="DCWeight">DC Weight:</label>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group mb-4">
+                    <label for="ReceivedWeight">Received Weight:</label>
+                </div>
+            </div>
+        </div>
         {{ formset.management_form }}   
-
+        
         {% for form in formset %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
             {% endfor %}
-            {% if forloop.first %}
-            <thead>
-                <tr>
-                    <th class="col-3"> 
-                        <div class="form-group mb-4">
-                            <label for="Size">Size:</label>
-                        </div>
-                    </th>
-                    <th class="col-3"> 
-                        <div class="form-group mb-4">
-                            <label for="Quantity">Quantity:</label>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-            {% endif %}
-                <tr class="{% cycle row1 row2 %}"></tr>
-
-                    <td class="col-3">
+            <div class="row form-row spacer">
+                <div class="input-group">
+                    <div class="col-lg-2 col-sm-6">
                         <div class="form-group mb-4">                                                
-                            <div class="input-group">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                                </span>
-                                {{ form.size }}
-                            </div>  
+                            
+                                {{ form.color }}
+                             
                         </div>
-                    </td>
-                    <td class="col-3">
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
                         <div class="form-group mb-4">                                                
-                            <div class="input-group">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                                </span>
-                                {{ form.quantity }}
-                            </div>  
+                            
+                                {{ form.fabric_type }}
+                             
                         </div>
-                    </td>
-                </tr>   
-            </tbody>                          
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="form-group mb-4">                                                
+                            
+                                {{ form.no_of_rolls }}
+                             
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="form-group mb-4">                                                
+                            
+                                {{ form.dc_weight }}
+                             
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="form-group mb-4">                                                
+                            
+                                {{ form.received_weight }}
+                            
+                        </div>
+                    </div>
+                    <div class="input-group-append">
+                        <button name="add-form-row" class="btn btn-success add-form-row">+</button>
+                    </div>
+                    
+                </div>
+            </div>                                 
         {% endfor %}
        
-    </table>
-
+    </div>
+    <div class="row spacer">
         <div class="d-grid">
             <button type="submit" class="btn btn-gray-800">Submit</button>
         </div>
-    </form>
+    </div>
+</form>
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- Adding forms dynamically to a Django formset -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="/static/assets/js/dynamic_form.js"></script>
+{% endblock javascripts %}
+   

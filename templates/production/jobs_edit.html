@@ -41,7 +41,113 @@
  
   <div class="card border-0 shadow mb-4">
     <div class="card-body">
-        {% include 'production/jobs_form.html' %}
+        <form action="#" class="mt-4" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row mb-4">
+                
+                {% for field in form %}
+                {{ field.errors }}
+                <div class="col-lg-4 col-sm-6">
+                    <div class="form-group mb-4">
+                        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                        <div class="input-group">
+            
+                            {{ field }}
+                        </div>  
+                    </div>
+                </div>
+                {% endfor %}       
+                <div class="row mb-4">
+                    <div class="col-lg-1 col-sm-6">
+                        <div class="form-group mb-4">
+                            <label for="FabricInwardColor:">Fabric Inward Color:</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-sm-6"></div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="form-group mb-4">
+                            <label for="FabricType">Fabric Type:</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-sm-6"></div>
+                    <div class="col-lg-1 col-sm-6">
+                        <div class="form-group mb-4">
+                            <label for="Numberofrolls">Number of rolls:</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-sm-6"></div>
+                    <div class="col-lg-1 col-sm-6">
+                        <div class="form-group mb-4">
+                            <label for="DCWeight">DC Weight:</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-sm-6"></div>
+                    <div class="col-lg-1 col-sm-6">
+                        <div class="form-group mb-4">
+                            <label for="ReceivedWeight">Received Weight:</label>
+                        </div>
+                    </div>
+                </div>
+                {{ formset.management_form }}   
+                
+                {% for form in formset %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    <div class="row form-row spacer">
+                        <div class="input-group">
+                            <div class="col-lg-1 col-sm-6">
+                                <div class="form-group mb-4">                                                
+                                    
+                                        {{ form.color }}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-sm-6"></div>
+                            <div class="col-lg-2 col-sm-6">
+                                <div class="form-group mb-4">                                                
+                                    
+                                        {{ form.fabric_type }}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-sm-6"></div>
+                            <div class="col-lg-1 col-sm-6">
+                                <div class="form-group mb-4">                                                
+                                    
+                                        {{ form.no_of_rolls }}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-sm-6"></div>
+                            <div class="col-lg-1 col-sm-6">
+                                <div class="form-group mb-4">                                                
+                                    
+                                        {{ form.dc_weight }}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-sm-6"></div>
+                            <div class="col-lg-1 col-sm-6">
+                                <div class="form-group mb-4">                                                
+                                    
+                                        {{ form.received_weight }}
+                                    
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>                                 
+                {% endfor %}
+               
+            </div>
+            <div class="row spacer">
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-gray-800">Submit</button>
+                </div>
+            </div>
+        </form>
     </div>
   </div>
 

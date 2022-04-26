@@ -19,11 +19,11 @@
                       </a>
                   </li>
                   <li class="breadcrumb-item"><a href="#">Triangle</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Jobs</li>
+                  <li class="breadcrumb-item active" aria-current="page">Deliveries</li>
               </ol>
           </nav>
-          <h2 class="h4">All Jobs</h2>
-          <p class="mb-0">Your Job analytics dashboard.</p>
+          <h2 class="h4">All Deliveries</h2>
+          <p class="mb-0">Your Delivery analytics dashboard.</p>
       </div>
       <div class="btn-toolbar mb-2 mb-md-0">
             <a class="btn btn-sm btn-gray-800 d-inline-flex align-items-center" href="{% url 'production:jobs-add' %}">
@@ -40,12 +40,12 @@
   </div>
   
 
-  {% if jobs|length > 0 %}
+  {% if delivery_data_rows|length > 0 %}
 
 
   <div class="card border-0 shadow table-wrapper table-responsive">
       <div class="card-header border-gray-100 d-flex justify-content-between align-items-center">
-          <h2 class="h4 mb-0">Job Filters</h2>
+          <h2 class="h4 mb-0">Delivery Filters</h2>
 
       </div>
 
@@ -61,17 +61,18 @@
                             
                             <th class="border-0 rounded-start">Job #</th>
                             
-                            <th class="border-0">Customer</th>
                             <th class="border-0">Color</th>
                             <th class="border-0">Style</th>
                             <th class="border-0">Job Status</th>
+                            <th class="border-0">Size</th>
+                            
                             <th class="border-0"></th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            {% for field in MyJobFilter.form %}
+                            {% for field in MyDeliveryFilter.form %}
                             <td> {{ field }}</td>
                             {% endfor %}
                             <td>         
@@ -90,64 +91,31 @@
       <table class="table table-hover">
           <thead>
               <tr>
-                  <th class="border-gray-200">Job #</th>
-                  <th class="border-gray-200">Date</th>
-
-                  <th class="border-gray-200">Color</th>					
-                  <th class="border-gray-200">Style</th>
-                
-                  <th class="border-gray-200">Tot Ord Qty</th>
-                  <th class="border-gray-200">Tot Del Qty</th>
-                  <th class="border-gray-200">Tot Bal Qty</th>
-                  <th class="border-gray-200">Job Status</th>
-                  <th class="border-gray-200"></th>
+                {% for column in delivery_data_columns %}
+                        
+                <th class="border-gray-200">{{column}}</th>
+                            
+                {% endfor %} 
               </tr>
           </thead>
           <tbody>
+                    <!-- Item -->
+                    {% for rows in delivery_data_rows %}
+                        
+                    <tr>
 
-            {% for job in jobs %}
+                        {% for row in rows %}
+                        <td>
+                            <a href="#" class="fw-bold">
 
-              <!-- Item -->
-              <tr>
-                  <td>
-                      <a href="#" class="fw-bold">
-                        {{job.job_no}}
-                      </a>
-                  </td>
-                  <td><span class="fw-normal">{{job.date}}</span></td> 
+                                    {{row}}
 
-                  <td><span class="fw-normal">{{job.color}}</span></td>  
-                  <td><span class="fw-normal">{{job.style}}</span></td>                        
-                 
-                  <td><span class="fw-normal">{{job.total_order_quantity}}</span></td>
-                  <td><span class="fw-normal">{{job.total_delivery_quantity}}</span></td>
-                  <td><span class="fw-normal">{{job.total_order_quantity|sub:job.total_delivery_quantity}}</span></td>
-                  {% if job.status.pk == 'OPEN' %}
-                  <td><span class="fw-bold text-warning">{{job.status}}</span></td>
-                  {% elif job.status.pk == 'CLOSED' %}
-                  <td><span class="fw-bold text-success">{{job.status}}</span></td>
-                  {% else %}
-                  <td><span class="fw-bold text-info">{{job.status}}</span></td>
-                  {% endif %}
-                  <td>
-                      <div class="btn-group">
-                          <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span class="icon icon-sm">
-                                  <span class="fas fa-ellipsis-h icon-dark"></span>
-                              </span>
-                              <span class="btn btn-group btn-outline-gray-600">Toggle</span>
-                          </button>
-                          <div class="dropdown-menu py-0">
-                              <a class="dropdown-item rounded-top" href="{% url 'production:jobs-details' job.slug %}"><span class="fas fa-eye me-2"></span>View Details</a>
-                              <a class="dropdown-item" href="{% url 'production:jobs-edit' job.slug %}"><span class="fas fa-edit me-2"></span>Edit</a>
-                              <a class="dropdown-item" href="{% url 'production:jobs-add-order' job.slug %}"><span class="fas fa-edit me-2"></span>Create Order</a>
-                              <a class="dropdown-item" href="{% url 'production:jobs-add-delivery' job.slug %}"><span class="fas fa-edit me-2"></span>Create Delivery</a>                              
-                              <a class="dropdown-item text-danger rounded-bottom" href="#"><span class="fas fa-trash-alt me-2"></span>Remove</a>
-                          </div>
-                      </div>
-                  </td>
-              </tr>  
-              {% endfor %}                                          
+                            </a>
+                        </td>
+                            {% endfor %}                                                                         
+
+                    </tr>  
+                        {% endfor %}                                          
           </tbody>
       </table>
       <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
@@ -185,7 +153,7 @@
 
     </div>
     <div class="col-lg-8">
-      <h3>Start by Adding First Job</h3>
+      <h3>Start by Adding First Delivery</h3>
       <img class=img-fluid src="{% static 'assets/img/empty.svg' %}" alt="Triangle Clothing">
     </div>
     <div class="col-lg-3">

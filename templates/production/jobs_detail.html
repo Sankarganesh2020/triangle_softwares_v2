@@ -21,7 +21,7 @@
                   <li class="breadcrumb-item active" aria-current="page">Jobs</li>
               </ol>
           </nav>
-          <h2 class="h4">{{Job}}</h2>
+          <h2 class="h4">{{job.job_no}}</h2>
           <p class="mb-0">Overview of Job Details.</p>
       </div>
       <div class="btn-toolbar mb-2 mb-md-0">
@@ -98,43 +98,44 @@
 
 <div class="card border-0 shadow table-wrapper table-responsive">
     <div class="card-header border-gray-100 d-flex justify-content-between align-items-center">
-        <h2 class="h4 mb-0">Order Details TEST</h2>
+        <h2 class="h4 mb-0">Order Quantity</h2>
     </div>
 </div>
-
 <div class="card border-0 shadow mb-4">
+
     <div class="card-body">
+
         <div class="card card-body border-0 shadow table-wrapper table-responsive">
             <table class="table table-hover">
-                <thead>
+                <thead class="thead-light">
                     <tr>
-                        <th class="border-gray-200">Order #</th>
-                        {% for number, sizes in orders_transposed.items %}
-                        {% for size, value in sizes.items %}
-                        <th class="border-gray-200">{{size}}</th>
-                        {% endfor %}             
+                        
+                        {% for column in order_data_columns %}
+                        
+                        <th class="border-gray-200">{{column}}</th>
+                                    
                         {% endfor %}  
-                        <th class="border-gray-200">Total ORD QTY</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Item -->
+                    {% for rows in order_data_rows %}
+                        
                     <tr>
-                        {% for number, sizes in orders_transposed.items %}
-                            
+
+                        {% for row in rows %}
                         <td>
                             <a href="#" class="fw-bold">
-                            {{number}}
+
+                                    {{row}}
+
                             </a>
                         </td>
-                        {% for size, value in sizes.items %}
-                        <td><span class="fw-normal">{{value}}</span></td>  
-                        {% endfor %}
-                        {% endfor %} 
-
-                        <td><span class="fw-normal">{{total_order_quantity.total_quantity}}</span></td>  
+                            {% endfor %}                                                                         
 
                     </tr>  
+                        {% endfor %} 
                                                             
                 </tbody>
             </table>
@@ -142,98 +143,46 @@
         </div>
     </div>
 </div>
-
-<div class="card border-0 shadow mb-4">
-    <div class="card-body">
-        <div class="card border-0 shadow table-wrapper table-responsive">
-            <div class="card-header border-gray-100 d-flex justify-content-between align-items-center">
-                <h2 class="h4 mb-0">Delivery Details TEST</h2>
-            </div>
-        </div>
-
-        <div class="card card-body border-0 shadow table-wrapper table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th class="border-gray-200">Delivery #</th>
-                        <th class="border-gray-200">Delivery Date</th>
-                        <th class="border-gray-200">Piece Type</th>                        
-                        {% for delivery_size in delivery_sizes %}
-                        <th class="border-gray-200">SIZE-{{delivery_size.size__size}}-Qty</th>
-                        {% endfor %}
-
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Item -->
-                    {% for number, sizes in deliverys_transposed.items %}
-                    <tr>                                                                        
-                            <td>
-                                <a href="#" class="fw-bold">
-                                {{number}}
-                                </a>
-                            </td>
-                            <td>                         
-                                {{delivery_number.date}}                      
-                            </td>  
-                            <td><span class="fw-normal">{{delivery_number.piece_type__piece_type}}</span></td>  
-                            {% for size, value in sizes.items %}
-                            <td><span class="fw-normal">{{value}}</span></td>  
-                            {% endfor %}                                                       
-                    </tr>  
-                    {% endfor %}                                       
-                </tbody>
-            </table>
-            
-        </div>
-    </div>
-</div>
-
 
 <div class="card border-0 shadow table-wrapper table-responsive">
     <div class="card-header border-gray-100 d-flex justify-content-between align-items-center">
-        <h2 class="h4 mb-0">Order Details</h2>
+        <h2 class="h4 mb-0">Delivery Quantity</h2>
     </div>
 </div>
-
 <div class="card border-0 shadow mb-4">
     <div class="card-body">
+
         <div class="card card-body border-0 shadow table-wrapper table-responsive">
             <table class="table table-hover">
-                <thead>
+                <thead class="thead-light">
                     <tr>
-                        <th class="border-gray-200">Order #</th>
-                        {% for order in orders %}
+
+                        {% for column in delivery_data_columns %}
                         
-                        <th class="border-gray-200">Size-{{order.size__size}}</th>
+                        <th class="border-gray-200">{{column}}</th>
                                     
                         {% endfor %}  
-                        <th class="border-gray-200">Total ORD QTY</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Item -->
+                    {% for rows in delivery_data_rows %}
+                        
                     <tr>
-                        {% for order in orders %}
-                            {% if forloop.first %}
+
+                        {% for row in rows %}
                         <td>
                             <a href="#" class="fw-bold">
-                            {{order.number}}
+
+                                    {{row}}
+
                             </a>
                         </td>
-                            {% endif %}
-                        {% endfor %} 
-
-                        {% for order in orders %} 
-
-                        <td><span class="fw-normal">{{order.total_quantity}}</span></td>  
-                        {% endfor %} 
-
-                        <td><span class="fw-normal">{{total_order_quantity.total_quantity}}</span></td>  
+                            {% endfor %}                                                                         
 
                     </tr>  
-                                                            
+                        {% endfor %}                                       
                 </tbody>
             </table>
             
@@ -241,64 +190,60 @@
     </div>
 </div>
 
+{% if job.status.pk == 'OPEN' %}
 
+<div class="card border-0 shadow table-wrapper table-responsive">
+    <div class="card-header border-gray-100 d-flex justify-content-between align-items-center">
+        <h2 class="h4 mb-0">Balance Quantity</h2>
+    </div>
+</div>
 <div class="card border-0 shadow mb-4">
     <div class="card-body">
-        <div class="card border-0 shadow table-wrapper table-responsive">
-            <div class="card-header border-gray-100 d-flex justify-content-between align-items-center">
-                <h2 class="h4 mb-0">Delivery Details</h2>
-            </div>
-        </div>
 
         <div class="card card-body border-0 shadow table-wrapper table-responsive">
             <table class="table table-hover">
-                <thead>
+                <thead class="thead-light">
                     <tr>
-                        <th class="border-gray-200">Delivery #</th>
-                        <th class="border-gray-200">Delivery Date</th>
-                        <th class="border-gray-200">Piece Type</th>                        
-                        {% for delivery_size in delivery_sizes %}
-                        <th class="border-gray-200">SIZE-{{delivery_size.size__size}}-Qty</th>
-                        {% endfor %}
+                        <th class="border-gray-200">Job #</th>
+     
 
+                        {% for column in balance_data_columns %}
+                        
+                        <th class="border-gray-200">{{column}}</th>
+                                    
+                        {% endfor %}  
 
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Item -->
-                    {% for delivery_number in delivery_numbers %}
-                    <tr>                                                                        
-                            <td>
-                                <a href="#" class="fw-bold">
-                                {{delivery_number.number}}
-                                </a>
-                            </td>
-                            <td>                         
-                                {{delivery_number.date}}                      
-                            </td>  
-                            <td><span class="fw-normal">{{delivery_number.piece_type__piece_type}}</span></td>  
-                            {% for delivery_size in delivery_sizes %}
-                                {% for delivery in deliverys %}     
-                                    {% if delivery_number.number == delivery.number %}                              
-                                        {% if delivery.size__size == delivery_size.size__size %}                                                                 
-                                        <td>                         
-                                            {{delivery.total_quantity}}                      
-                                        </td>                                        
-                                        
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}                      
-                            {% endfor %}                                                        
+                                            
+                    <tr>
+                        <td>
+                            <a href="#" class="fw-bold">
+                              {{job.job_no}}
+                            </a>
+                        </td>
+
+                        {% for row in balance_data_rows %}
+                        <td>
+                            <a href="#" class="fw-bold">
+
+                                    {{row}}
+
+                            </a>
+                        </td>
+                                                                                               
+                        {% endfor %} 
                     </tr>  
-                    {% endfor %}                                       
+                                                              
                 </tbody>
             </table>
             
         </div>
     </div>
 </div>
-
-
+{% endif %}
 
 {% endblock content %}
 

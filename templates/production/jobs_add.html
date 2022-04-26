@@ -1,0 +1,163 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="py-4">
+      <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+          <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+              <li class="breadcrumb-item">
+                  <a href="#">
+                      <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                  </a>
+              </li>
+              <li class="breadcrumb-item"><a href="#">Jobs</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Forms</li>
+          </ol>
+      </nav>
+      <div class="d-flex justify-content-between w-100 flex-wrap">
+          <div class="mb-3 mb-lg-0">
+              <h1 class="h4">Add Job</h1>
+              <p class="mb-0">Create job and inward fabric details</p>
+          </div>
+          <div>
+              <a href="#" class="btn btn-outline-gray"><i class="far fa-question-circle me-1"></i> </a>
+          </div>
+      </div>
+  </div>
+
+  <div class="card border-0 shadow mb-4">
+    <div class="card-body">        
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow components-section">
+                    <div class="card-body">     
+                        <form action="#" class="mt-4" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row mb-4">
+                                
+                                {% for field in form %}
+                                {{ field.errors }}
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="form-group mb-4">
+                                        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                                        <div class="input-group">
+                            
+                                            {{ field }}
+                                        </div>  
+                                    </div>
+                                </div>
+                                {% endfor %}       
+                                <div class="row mb-4">
+                                    <div class="col-lg-1 col-sm-6">
+                                        <div class="form-group mb-4">
+                                            <label for="FabricInwardColor:">Fabric Inward Color:</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-6"></div>
+                                    <div class="col-lg-2 col-sm-6">
+                                        <div class="form-group mb-4">
+                                            <label for="FabricType">Fabric Type:</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-6"></div>
+                                    <div class="col-lg-1 col-sm-6">
+                                        <div class="form-group mb-4">
+                                            <label for="Numberofrolls">Number of rolls:</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-6"></div>
+                                    <div class="col-lg-1 col-sm-6">
+                                        <div class="form-group mb-4">
+                                            <label for="DCWeight">DC Weight:</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-6"></div>
+                                    <div class="col-lg-1 col-sm-6">
+                                        <div class="form-group mb-4">
+                                            <label for="ReceivedWeight">Received Weight:</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ formset.management_form }}   
+                                
+                                {% for form in formset %}
+                                    {% for hidden in form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+                                    <div class="row form-row spacer">
+                                        <div class="input-group">
+                                            <div class="col-lg-1 col-sm-6">
+                                                <div class="form-group mb-4">                                                
+                                                    
+                                                        {{ form.color }}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-sm-6"></div>
+                                            <div class="col-lg-2 col-sm-6">
+                                                <div class="form-group mb-4">                                                
+                                                    
+                                                        {{ form.fabric_type }}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-sm-6"></div>
+                                            <div class="col-lg-1 col-sm-6">
+                                                <div class="form-group mb-4">                                                
+                                                    
+                                                        {{ form.no_of_rolls }}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-sm-6"></div>
+                                            <div class="col-lg-1 col-sm-6">
+                                                <div class="form-group mb-4">                                                
+                                                    
+                                                        {{ form.dc_weight }}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-sm-6"></div>
+                                            <div class="col-lg-1 col-sm-6">
+                                                <div class="form-group mb-4">                                                
+                                                    
+                                                        {{ form.received_weight }}
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-sm-6"></div>
+                                            <div class="col-lg-1 col-sm-6">
+                                                <div class="input-group-append">
+                                                    <button name="add-form-row" class="btn btn-success add-form-row">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                 
+                                {% endfor %}
+                            
+                            </div>
+                            <div class="row spacer">
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-gray-800">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- Adding forms dynamically to a Django formset -->
+<script src="/static/assets/js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="/static/assets/js/dynamic_form.js"></script>
+{% endblock javascripts %}
+
