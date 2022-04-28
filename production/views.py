@@ -376,6 +376,8 @@ def list_deliveries(request):
     context['delivery_data_columns'] = delivery_data_columns
     context['delivery_data_rows'] = delivery_data_rows  
 
+    context['delivery_length'] = len(delivery_data_rows)
+
     context['MyDeliveryFilter'] = MyDeliveryFilter
     context['title'] = "Deliveries"
 
