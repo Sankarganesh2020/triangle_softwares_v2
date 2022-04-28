@@ -12,6 +12,6 @@ urlpatterns = [
     path('jobs/add/delivery/<slug:slug>',views.add_delivery, name='jobs-add-delivery'),
     path('jobs/details/<slug:slug>',views.details_job, name='jobs-details'),
     path('deliveries/list/', views.list_deliveries, name='deliveries-list'),
-    path('deliveries/summary/', views.summary_deliveries, name='deliveries-summary'),
+    # path('deliveries/summary/', views.summary_deliveries, name='deliveries-summary'),
 
 ]

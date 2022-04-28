@@ -382,55 +382,7 @@ def list_deliveries(request):
     context['msg'] = msg
     return render(request, 'production/deliveries_list.html', context)
 
-@login_required(login_url="/authentication/login/")
-def summary_deliveries(request):
- 
-    context = {}
-    msg = None
-    
-    deliveries_qs = Delivery.objects.all()
 
-    # order_summary= order_data.values('job_no','job_no__date','job_no__status','job_no__color','job_no__style').annotate(total_qty=Sum('quantity'))
-    MyDeliveryFilter = DeliveryFilter(request.GET, queryset=deliveries_qs)
-
-    deliveries = MyDeliveryFilter.qs
-
-    
-    deliveries = deliveries.annotate(total_quantity=Sum('quantity')).values('number','job_no','date', 'size__size', 'total_quantity').order_by('number')
-
-    transposed_delivery_data = {}
-    delivery_data_measure_columns_type = {}
-    delivery_data_measure_columns = []
-    for delivery in deliveries:
-        transposed_delivery_data.setdefault(delivery['number'], {}).update(
-                        {'job #' : delivery['job_no'], 'date' : delivery['date'], 'Size-%s' % delivery['size__size']: delivery['total_quantity']})
-        delivery_data_measure_columns_type['Size-%s' % delivery['size__size']] = 'int64'
-        delivery_data_measure_columns.append('Size-%s' % delivery['size__size']) 
-
-    delivery_data_measure_columns = list(set(delivery_data_measure_columns))
-    delivery_df = pd.DataFrame(transposed_delivery_data).fillna(0)
-    delivery_df_reset = delivery_df.transpose().reset_index().rename(columns={'index': 'delivery #'})    
-    delivery_data_df = delivery_df_reset.astype(delivery_data_measure_columns_type)
-
-    print(delivery_data_df.dtypes)
-    delivery_data_df['total qty'] = delivery_data_df.sum(axis=1, numeric_only=True)
-    delivery_data_measure_columns.append('total qty')
-    delivery_data_measure_columns_type['total qty'] = 'int64'
-    delivery_data_df.loc['total'] = delivery_data_df[delivery_data_measure_columns].sum()
-    delivery_data_df = delivery_data_df.fillna('').astype(delivery_data_measure_columns_type)
-    delivery_data_columns = delivery_data_df.columns.values.tolist()
-    delivery_data_rows = delivery_data_df.values.tolist()
-    print("Columns: {}", delivery_data_columns)
-    print("Rows: {}", delivery_data_rows)     
-
-    context['delivery_data_columns'] = delivery_data_columns
-    context['delivery_data_rows'] = delivery_data_rows  
-
-    context['MyDeliveryFilter'] = MyDeliveryFilter
-    context['title'] = "Deliveries"
-
-    context['msg'] = msg
-    return render(request, 'production/deliveries_summary.html', context)
 
 
 @login_required(login_url="/authentication/login/")
